@@ -58,9 +58,10 @@ class _AnnounceWebScrapState extends State<AnnounceWebScrap> {
     return Scaffold(
         backgroundColor: Colors.teal,
         body: title.isEmpty
-            ? const Text(
-                "No Data",
-                style: TextStyle(color: Colors.white, fontSize: 30),
+            ? const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
               )
             : ListView.builder(
                 itemCount: title.length,
