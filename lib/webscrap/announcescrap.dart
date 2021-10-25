@@ -4,47 +4,48 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WebScraping extends StatefulWidget {
-  const WebScraping({Key? key}) : super(key: key);
+class AnnounceWebScrap extends StatefulWidget {
+  const AnnounceWebScrap({Key? key}) : super(key: key);
 
   @override
-  _WebScrapingState createState() => _WebScrapingState();
+  _AnnounceWebScrapState createState() => _AnnounceWebScrapState();
 }
 
-class _WebScrapingState extends State<WebScraping> {
+class _AnnounceWebScrapState extends State<AnnounceWebScrap> {
   List<String> title = [];
-  List<String?> img = [];
+  // List<String?> img = [];
   List<String> time = [];
   List<String?> link = [];
 
   void _getDataFromWeb() async {
     final response =
-        await http.get(Uri.parse("https://merolagani.com/NewsList.aspx"));
+        await http.get(Uri.parse("https://www.sharesansar.com/announcement"));
     final body = response.body;
 
     final html = parse(body);
 
-    final element = html.getElementsByClassName("media-body");
-    final image = html.getElementsByClassName("media-wrap");
-    final date = html.getElementsByClassName("media-body");
-    final link2 = html.getElementsByClassName("media-body");
+    final element =
+        html.getElementsByClassName("col-lg-11 col-md-11 col-sm-11 col-xs-12");
+    // final image =
+    //     html.getElementsByClassName("col-md-2 col-sm-2 col-xs-3 hidden-xs");
+    final date =
+        html.getElementsByClassName("col-lg-11 col-md-11 col-sm-11 col-xs-12");
+    final link2 =
+        html.getElementsByClassName("col-lg-11 col-md-11 col-sm-11 col-xs-12");
 
     setState(() {
-      title =
-          element.map((e) => e.getElementsByTagName("a")[0].innerHtml).toList();
-      img = image
-          .map((e) => e.getElementsByTagName("img")[0].attributes['src'])
+      title = element
+          .map((e) => e.getElementsByTagName("h4")[0].innerHtml)
           .toList();
+      // img = image
+      //     .map((e) => e.getElementsByTagName("img")[0].attributes['src'])
+      //     .toList();
       time =
           date.map((e) => e.getElementsByTagName("span")[0].innerHtml).toList();
       link = link2
           .map((e) => e.getElementsByTagName("a")[0].attributes['href'])
           .toList();
     });
-    var name;
-    for (name in time) {
-      debugPrint(name);
-    }
   }
 
   @override
@@ -87,7 +88,7 @@ class _WebScrapingState extends State<WebScraping> {
                                 color: Colors.white,
                                 child: Column(
                                   children: <Widget>[
-                                    Image.network(img[index]!),
+                                    // Image.network(img[index]!),
                                     Text(time[index]),
                                     const SizedBox(height: 15),
                                     Align(

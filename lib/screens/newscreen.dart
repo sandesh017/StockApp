@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stockapp/webscrap/webscrap.dart';
+import 'package:stockapp/webscrap/webscrapshare.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({Key? key}) : super(key: key);
@@ -10,17 +11,25 @@ class NewsScreen extends StatefulWidget {
 
 class _NewsScreenState extends State<NewsScreen>
     with SingleTickerProviderStateMixin {
-  late TabController controller;
+  static const List<Tab> myTabs = <Tab>[
+    Tab(text: 'Mero Lagani'),
+    Tab(text: 'Share Sansar'),
+    Tab(text: 'Nepali Paisa'),
+  ];
+  late TabController _tabcontroller;
 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabcontroller = TabController(
+      length: myTabs.length,
+      vsync: this,
+    );
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _tabcontroller.dispose();
     super.dispose();
   }
 
@@ -31,24 +40,22 @@ class _NewsScreenState extends State<NewsScreen>
         centerTitle: true,
         title: const Text("News"),
         bottom: TabBar(
-          controller: _controller,
+          controller: _tabcontroller,
           indicatorColor: Colors.white,
-          tabs: const [
-            Tab(
-              text: "Mero Lagani",
-            ),
-            Tab(
-              text: "Share Sansar",
-            ),
-            Tab(
-              text: "Nepali Paisa",
-            )
-          ],
+          tabs: myTabs,
         ),
       ),
-      body: const TabBarView(
-          controller: controller,
-          children: [Text("MeroLagani"), Text("ShareSansar"), WebScraping()]),
+      body: TabBarView(controller: _tabcontroller, children: const [
+        WebScraping(),
+        WebScrapShareSansar(),
+        Center(
+          child: Text(
+            "Nepali Paisa",
+            style: TextStyle(color: Colors.white, fontSize: 30),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ]),
     );
   }
 }

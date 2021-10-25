@@ -4,34 +4,37 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WebScraping extends StatefulWidget {
-  const WebScraping({Key? key}) : super(key: key);
+class WebScrapShareSansar extends StatefulWidget {
+  const WebScrapShareSansar({Key? key}) : super(key: key);
 
   @override
-  _WebScrapingState createState() => _WebScrapingState();
+  _WebScrapShareSansarState createState() => _WebScrapShareSansarState();
 }
 
-class _WebScrapingState extends State<WebScraping> {
+class _WebScrapShareSansarState extends State<WebScrapShareSansar> {
   List<String> title = [];
   List<String?> img = [];
   List<String> time = [];
   List<String?> link = [];
 
   void _getDataFromWeb() async {
-    final response =
-        await http.get(Uri.parse("https://merolagani.com/NewsList.aspx"));
+    final response = await http
+        .get(Uri.parse("https://www.sharesansar.com/category/latest"));
     final body = response.body;
 
     final html = parse(body);
 
-    final element = html.getElementsByClassName("media-body");
-    final image = html.getElementsByClassName("media-wrap");
-    final date = html.getElementsByClassName("media-body");
-    final link2 = html.getElementsByClassName("media-body");
+    final element =
+        html.getElementsByClassName("col-md-10 col-sm-10 col-xs-12");
+    final image =
+        html.getElementsByClassName("col-md-2 col-sm-2 col-xs-3 hidden-xs");
+    final date = html.getElementsByClassName("col-md-10 col-sm-10 col-xs-12");
+    final link2 = html.getElementsByClassName("col-md-10 col-sm-10 col-xs-12");
 
     setState(() {
-      title =
-          element.map((e) => e.getElementsByTagName("a")[0].innerHtml).toList();
+      title = element
+          .map((e) => e.getElementsByTagName("h4")[0].innerHtml)
+          .toList();
       img = image
           .map((e) => e.getElementsByTagName("img")[0].attributes['src'])
           .toList();

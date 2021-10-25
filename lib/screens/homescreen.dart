@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stockapp/screens/announcement.dart';
 import 'package:stockapp/screens/newscreen.dart';
 import 'package:stockapp/utilities/const.dart';
 import 'package:stockapp/webscrap/webscrap.dart';
@@ -91,8 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.surround_sound_outlined,
                     color: Colors.tealAccent),
-                "Announcement",
-                () {}),
+                "Announcement", () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Announcement()));
+            }),
             CustomSizedBox("TOOLS"),
             ListBuilder(
                 const Icon(Icons.calculate_outlined, color: Colors.tealAccent),
