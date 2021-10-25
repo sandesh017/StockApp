@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:stockapp/screens/newscreen.dart';
 import 'package:stockapp/utilities/const.dart';
+import 'package:stockapp/webscrap/webscrap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             CustomSizedBox("LIVE MARKETS"),
             ListBuilder(const Icon(Icons.home_filled, color: Colors.tealAccent),
-                "Dashboard"),
+                "Dashboard", () {}),
             const Divider(
               thickness: 1,
               color: Colors.grey,
@@ -53,7 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.insert_chart_outlined_outlined,
                     color: Colors.tealAccent),
-                "Market"),
+                "Market",
+                () {}),
             const Divider(
               thickness: 1,
               color: Colors.grey,
@@ -61,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.account_balance_outlined,
                     color: Colors.tealAccent),
-                "Portfolio"),
+                "Portfolio",
+                () {}),
             const Divider(
               thickness: 1,
               color: Colors.grey,
@@ -69,12 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.table_chart_outlined,
                     color: Colors.tealAccent),
-                "FloorSheet"),
+                "FloorSheet",
+                () {}),
             CustomSizedBox("CONTENT"),
             ListBuilder(
                 const Icon(Icons.perm_device_information,
                     color: Colors.tealAccent),
-                "News"),
+                "News", () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const NewsScreen()));
+            }),
             const Divider(
               thickness: 1,
               color: Colors.grey,
@@ -83,23 +91,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.surround_sound_outlined,
                     color: Colors.tealAccent),
-                "Announcement"),
+                "Announcement",
+                () {}),
             CustomSizedBox("TOOLS"),
             ListBuilder(
                 const Icon(Icons.calculate_outlined, color: Colors.tealAccent),
-                "Calculator"),
+                "Calculator",
+                () {}),
             const Divider(
               thickness: 1,
               color: Colors.grey,
             ),
             ListBuilder(
                 const Icon(Icons.bar_chart_outlined, color: Colors.tealAccent),
-                "Chart"),
+                "Chart",
+                () {}),
 
             CustomSizedBox("MORE"),
             ListBuilder(
                 const Icon(Icons.redeem_sharp, color: Colors.tealAccent),
-                "Ipo result"),
+                "Ipo result",
+                () {}),
             const Divider(
               thickness: 1,
               color: Colors.grey,
@@ -107,7 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ListBuilder(
                 const Icon(Icons.settings_applications_outlined,
                     color: Colors.tealAccent),
-                "Settings"),
+                "Settings",
+                () {}),
           ],
         ),
       ),
@@ -131,14 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class ListBuilder extends StatelessWidget {
-  ListBuilder(this.listIcon, this.listName, {Key? key}) : super(key: key);
+  ListBuilder(this.listIcon, this.listName, this.onClick, {Key? key})
+      : super(key: key);
   Icon listIcon;
   String listName;
+  VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onClick,
       child: ListTile(
         leading: listIcon,
         title: Text(
